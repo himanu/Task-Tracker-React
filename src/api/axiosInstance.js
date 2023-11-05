@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverUrl = 'http://localhost:4000';
+const serverUrl = 'https://task-tracker-ll2w.onrender.com/';
 const axiosInstance = axios.create({
     baseURL: serverUrl
 })
