@@ -16,7 +16,7 @@ import DesktopNav from './desktop-navigation';
 import MobileNavigation from './mobile-nav';
 
 const pages = [{title: 'Dashboard', route: 'dashboard'}, {title: 'About', route: 'About'}];
-const settings = ['Profile', 'Logout'];
+const settings = ['Logout'];
 
 const ResponsiveAppBar = () => {
   const navigate = useNavigate();

@@ -79,16 +79,18 @@ const Todo = ({ projectId }) => {
                 task
             });
             setVisibilityAddTaskForm('closed');
-            setLoading(false);
             setTitle('');
             setDescription('');
         } catch (err) {
             console.log("Error ", err);
             setError(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     const updateTaskHandler = async (task) => {
+        setLoading(true);
         const res = await api.updateTask(task)
         const updatedTask = res?.data?.task;
         if (updatedTask) {
@@ -98,10 +100,12 @@ const Todo = ({ projectId }) => {
                 task: updatedTask
             });
         }
+        setLoading(false);
     };
 
     const deleteTaskHandler = async (taskId) => {
         try {
+            setLoading(true);
             await api.deleteTask(taskId);
             dispatch({
                 type: "delete-task",
@@ -109,6 +113,8 @@ const Todo = ({ projectId }) => {
             })
         } catch (err) {
             console.log("Something went wrong while deleting task");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -116,7 +122,6 @@ const Todo = ({ projectId }) => {
         loadTasks();
     }, []);
 
-    console.log("Tasks ", tasks);
     const { completedTasks, pendingTasks} = filterTasks(tasks);
 
     return (
@@ -165,7 +170,7 @@ const Todo = ({ projectId }) => {
                 </div>
             )}
 
-            {(visibilityAddTaskForm === 'closed' && tasks.length === 0) && (
+            {(visibilityAddTaskForm === 'closed' && !loading && tasks.length === 0) && (
                 <div style={{ textAlign: 'center' }}>
                     <BackgroundImg />
                     <div style={{ fontSize: '0.8rem' }}>Get a clear view of the day ahead.</div>
@@ -189,17 +194,17 @@ const Todo = ({ projectId }) => {
                             </button>
                         </div>
                     </form>
-                    {loading && (
-                        <>
-                            <div style={{ width: '100%', height: '100%', position: 'absolute', top: '0', left: '0', background: '#ccc', opacity: '0.5' }}>
-
-                            </div>
-                            <div style={{ width: '100%', height: '100%', position: 'absolute', top: '0%', left: '0%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <CircularProgress style={{ color: '#333' }} />
-                            </div>
-                        </>
-                    )}
                 </div>
+            )}
+            {loading && (
+                <>
+                    <div style={{ width: '100%', height: '100%', position: 'absolute', top: '0', left: '0', background: '#ccc', opacity: '0.5' }}>
+
+                    </div>
+                    <div style={{ width: '100%', height: '100%', position: 'absolute', top: '0%', left: '0%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <CircularProgress style={{ color: '#333' }} />
+                    </div>
+                </>
             )}
         </div>
     )
