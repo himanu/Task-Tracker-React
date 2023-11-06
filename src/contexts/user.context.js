@@ -9,10 +9,12 @@ const defaultUserState = "";
 export const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(defaultUserState);
+    const [isLoading, setIsLoading] = useState(false);
 
     /** get user info using jwt token stored in local storage */
     const loadUser = async () => {
         try {
+            setIsLoading(true);
             const jwtToken = localStorage.getItem(jwtTokenString);
             if (!jwtToken)
                 return;
@@ -21,12 +23,15 @@ const UserContextProvider = ({ children }) => {
             setUser(data?.user);
         } catch(err) {
             console.error("Error while loading user ", err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     /** sign in user using access token recieved from google oauth api */
     const signInUser = async (accessToken) => {
         try {
+            setIsLoading(true);
             const { data } = await api.signIn(accessToken);
             /** store jwt token in local storage */
             if (data?.token)
@@ -35,6 +40,8 @@ const UserContextProvider = ({ children }) => {
         } catch (err) {
             console.error("Error while signing in user ", err);
             throw err.message
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -55,7 +62,8 @@ const UserContextProvider = ({ children }) => {
                 user,
                 loadUser,
                 signInUser,
-                logoutUser
+                logoutUser,
+                isLoading
             }}
         >
             {children}
