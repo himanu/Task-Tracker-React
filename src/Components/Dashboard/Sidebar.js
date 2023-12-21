@@ -73,7 +73,7 @@ export default function ProjectDrawer({ addProject, ...props }) {
   }
 
   return (
-    <div style={{ borderRight: '1px solid rgba(0, 0, 0, 0.12)' }}>
+    <div style={{ borderRight: '1px solid rgba(0, 0, 0, 0.12)', flexBasis: "20%" }}>
       <Drawer
         open={true}
         variant="permanent"
