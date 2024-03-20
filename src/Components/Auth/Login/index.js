@@ -1,8 +1,10 @@
 import { GoogleLogin } from 'react-google-login';
 import WelcomeImg from '../../../images/Welcome.jpg';
+import BlurWelcomeImg from '../../../images/Welcome_blur.jpg';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../contexts/user.context';
+import BlurredImg from '../../Blurred-Image';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -23,7 +25,7 @@ const Login = () => {
     }
     return (
         <div style={{ margin: 'auto', background: '#fff', padding: '1rem', borderRadius: '0.25rem', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '80vh', border: '1px solid #ccc' }}>
-            <img src={WelcomeImg} style={{ height: '80px', width: '80px', borderRadius: '50%' }} alt="Website icon" />
+            <BlurredImg origImgSrc={WelcomeImg} blurImgSrc={BlurWelcomeImg} style={{ height: '80px', width: '80px', borderRadius: '50%' }} alt="Website icon" />
             <h3>Welcome to the Todoist</h3>
             <p>Please sign in to continue</p>
             <div style={{ position: 'absolute', top: '50%' }}>
