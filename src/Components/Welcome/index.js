@@ -1,12 +1,21 @@
 import styles from './style.module.css';
 import { useNavigate } from "react-router-dom";
 import HomeImg from '../../images/Home.webp';
+import BlurHomeImg from '../../images/Home_blur.webp';
+import { useEffect, useState } from 'react';
 
 const Welcome = () => {
     const navigate = useNavigate();
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+    useEffect(() => {
+        const image = new Image();
+        image.onload = () => setImageLoaded(true);
+        image.src = HomeImg
+    },[])
     return (
         <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <img src={HomeImg} width='200px' height='200px' style={{borderRadius: '50%'}} alt="images" />
+            <img src={imageLoaded ? HomeImg : BlurHomeImg} width='200px' height='200px' style={{borderRadius: '50%'}} alt="images" />
             <div style={{padding: '1rem 0rem'}}>
                 <h1 style={{color: '#151b26', fontWeight: '400', marginBottom: '2rem', marginTop: 0, textAlign: 'center'}}>
                     Organize your project with Todoist
