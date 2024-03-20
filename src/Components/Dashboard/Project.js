@@ -8,7 +8,7 @@ export default function Project({project}) {
     <>
       {!project ? (
         <div style={{ margin: '1em' }}>
-          Welcome {user.name}, please select one of the project
+          Welcome {user.name}, please select one of the project in Sidebar
         </div>) : (
         <div style={{flex: 1, padding: '1rem', display: 'flex', flexDirection: 'column'}}>
           <div style={{fontSize: '1.25rem', fontWeight: 500}}>
